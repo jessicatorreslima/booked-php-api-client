@@ -53,7 +53,7 @@ class Client {
         $this -> username = $_username;
         $this -> password = $_password;
 
-        //Checks and sits API Booking Location, if not supplied the defualt will be used
+        //Checks and sits API Booking Location, if not supplied the default will be used
         if(isset($_root)){
 
             $this -> root = $_root;
@@ -113,7 +113,7 @@ class Client {
     }
 
     private function goodBye($message){
-        __destruct();
+        $this -> __destruct();
         die($message);
 
     }
@@ -323,7 +323,7 @@ class Client {
 
     public function createResource($resourceObject){
 
-        return getResponse( config::$routes[__FUNCTION__], $resourceObject);
+        return $this -> getResponse( config::$routes[__FUNCTION__], $resourceObject);
 
     }
 
@@ -395,7 +395,7 @@ class Client {
      */
     public function createCustomAttribute($attibute){
 
-        return getResponse(config::$routes[__FUNCTION__], $attibute);
+        return $this -> getResponse(config::$routes[__FUNCTION__], $attibute);
 
     }
 
@@ -437,7 +437,7 @@ class Client {
     public function getCategoryAttributes($categoryId){
 
 
-        if($categoryId != ATT_CAT_RESERVATION && $categoryId != ATT_CAT_USER && $categoryId != ATT_CAT_RESOURCE){
+        if($categoryId != config::ATT_CAT_RESERVATION && $categoryId != config::ATT_CAT_USER && $categoryId != config::ATT_CAT_RESOURCE){
 
             return false;
         }
@@ -561,7 +561,7 @@ class Client {
             'method'  => 'post',
         );
 
-        return update_delete(config::$routes[__FUNCTION__], $updatedReservation, $_options);
+        return $this -> update_delete(config::$routes[__FUNCTION__], $updatedReservation, $_options);
 
     }
 
@@ -574,7 +574,7 @@ class Client {
             'method'  => 'delete',
         );
 
-        return update_delete(config::$routes[__FUNCTION__], null, $_options);
+        return $this -> update_delete(config::$routes[__FUNCTION__], null, $_options);
 
     }
 
@@ -582,7 +582,7 @@ class Client {
 
         $url = $this -> root . $_endpoint . $_updateopt['segment'];
 
-        $endpoint = hasScope($_updateopt['scope']) ? $url . '?updateScope=' . $_updateopt['scope'] : $url;
+        $endpoint = $this -> hasScope($_updateopt['scope']) ? $url . '?updateScope=' . $_updateopt['scope'] : $url;
 
         $result = $this -> call($endpoint, $_updateObject, $_updateopt, true);
 
